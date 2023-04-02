@@ -1,9 +1,17 @@
-[Git](https://git-scm.com/) should already be installed on your Linux distribution or MacOS version. You can check by using `git --version` in the command line. However if it's not installed do so using:
+import { Tab, Tabs } from 'nextra-theme-docs'
 
-```bash
-# Linux
-sudo apt-get install git
+<Tabs items={['Linux', 'MacOS']}>
+    <Tab>
+        [Git](https://git-scm.com/) should already be installed on your Linux distribution. You can check by using `git --version` in the command line. However if it's not installed do so using:
+        ```bash
+        sudo apt-get install git
+        ```
+    </Tab>
+    <Tab>
+        [Git](https://git-scm.com/) should already be installed on your MacOS version. You can check by using `git --version` in the command line. However if it's not installed do so using:
+        ```bash
+        brew install git
+        ```
+    </Tab>
+</Tabs>
 
-# MacOS
-brew install git
-```
