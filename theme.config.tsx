@@ -1,5 +1,5 @@
 export default {
-    logo: <span style={{ fontWeight: 800 }}>Fellenoord developer wiki</span>,
+    logo: <span style={{ fontWeight: 800 }}>WebCieWiki</span>,
     project: {
         link: 'https://github.com/fellenoord',
     },
