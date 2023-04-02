@@ -3,5 +3,6 @@
     "wsl": "Windows Subsystem for Linux (WSL)",
     "macos": "MacOS",
     "nodejs": "Node.js",
+    "yarn": "Yarn",
     "git": "Version control using Git"
 }

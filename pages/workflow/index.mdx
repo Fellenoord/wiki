@@ -1,0 +1,126 @@
+To get familiar with the way we go from 0 to completing an issue, we've created a step-by-step guide.
+
+## 1. Setup
+
+First, make sure you have gone through everything under [Learning](/learning) and [Setup](/setup).
+
+## 2. Checkout the code
+
+Using the terminal navigate to the folder where you keep your repositories locally. We recommend using the following folder structure:
+
+```
+~/repositories/<organisation>/<repository>
+```
+
+> In this case the organisation would be `fellenoord`, and the repository is one were are about to clone from the remote. If you use the same folder structure navigating to there goes as follows: `cd ~/repositories/fellenoord`.
+
+Clone the repository using git (we'll use the backend as example here). You can find this link at the repository page at [GitHub](https://github.com/Fellenoord/fellenoord-api).
+
+![Checkout code from GitHub](/checkout-code.png)
+
+```bash
+git clone git@github.com:Fellenoord/fellenoord-api.git
+```
+
+## 3. Setting up the dependencies
+
+For the development at the WebCie we universally use the [yarn](/setup/yarn). To get all the dependencies downloaded simply run:
+
+```bash
+yarn install
+
+# shorthand
+yarn
+```
+
+This will create a `node_modules` folder with all the dependencies required to develop locally.
+
+## 4. Running the application
+
+For all applications we provide a `README.md` file in which we tell you how to run the application. Make sure to read that file!
+
+## 5. Choosing an issue
+
+To keep track of work we use the GitHub projects feature. Simply pick an issue from the 'Ready for work' column on the [WebCie planning](https://github.com/orgs/Fellenoord/projects/1) project board. In the issue itself, put yourself as assignee. Then, if you're ready to make changes, move the card to the 'In progress' column.
+
+## 6. Making changes
+
+Now that we've chosen an issue we want to work on there are some essential steps.
+
+### Create a branch
+
+To ensure code quality in all of our repositories, we work with protected branches. For each repository the `main` branch is the protected branch. This means that no code can be directly pushed to that branch, making sure that code is first reviewed. So when making changes we always work on a separate branch. To create a branch locally:
+
+```bash
+git checkout -b <name>
+```
+
+### Commit changes
+
+After you've make some changes, we can commit those changes.
+
+> It is important to realise that (especially when working on larger issues) it is recommended to periodically commit your code. For two reasons: making the review of the PR easier, and allowing for rollback to a certain commit when certain changes don't work out. To see what changes you've made:
+
+```bash
+git status
+```
+
+Then stage the files for commit. 
+
+```bash
+# All all files.
+git add .
+
+# Add specific file(s).
+git add <path-to-file-or-directory>
+```
+
+Finally, we can commit the changes.
+
+> Please adhere to the [git conventions](/workflow/git-conventions).
+
+```bash
+git commit -m "feat(topic): awesome description for feature"
+```
+
+### Push changes
+
+The only thing left is to push your changes from the local git repository to the remote.
+
+```bash
+git push
+```
+
+## 7. Review 
+
+### Creating a PR 
+
+Now that you have pushed your changes to your own branch, you are ready to create a pull request (PR). To do so, head over to the repository's page on GitHub and click on the 'Pull requests' tab. Then click on the 'New pull request' button. In here, you can select the branch you want to merge into our `main` branch. You should also take note of the following things:
+- Make sure to pick a title that is descriptive of the changes you've made
+- Make sure to mention in the description which issue you are closing (i.e. `Closes #<issue-number>`)
+- Make sure to assign yourself to the PR (can be done on the right)
+
+Once everything is ready, you can choose to create the PR directly or as a draft. If you choose to create it as a draft, you can still make changes to the PR before it is ready to be merged. Reviewers will automatically be assigned and notified of the PR.
+
+### Fixing requested changes
+
+After a codeowner has reviewed your PR, they might request some changes. It might also be the case that certain required actions fail. In this case, you should make the requested changes and push them to the branch. Once you have made the necessary changes, do not forget to push them to the branch as well as to ask for a new review. If you do not ask for a new review, the codeowner might not be notified of the changes you've made.
+
+### Reviewing a PR
+
+While this might not be immediately relevant for everyone, it might be the case that you are asked to review a PR. When reviewing a PR, you should take the following things into account:
+
+- Does the PR close the issue it is supposed to close? 
+- Does the PR adhere to our style conventions? (this is also partially checked by the linting action)
+- Are there any changes that are not necessary for the PR? (i.e. changes to files that are not related to the issue)
+- Does the PR have a proper description ? (i.e. does it mention the issue it closes)
+- Does the PR introduce any breaking changes? (i.e. changes that might break other parts of the application)
+
+It might be wise to test the PR locally to see if it works as intended. If you have any questions, you can always ask the author of the PR. Also make sure to use the tools provided by GitHub to make the review as clear and concise as possible, i.e. using code suggestions.
+
+
+### Merging code
+
+> This action can only be done by one of the `CODEOWNERS`.
+
+When the PR is finished and approved, we can merge the code to be on the `main` branch.
