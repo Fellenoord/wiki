@@ -1,0 +1,35 @@
+A guide to get Windows Subsystem for Linux (WSL) up and running for web development. It will cover setting up the WSL environment, and all the tools needed.
+
+## Prerequisites
+
+This guide assumes you are on a recent build of Windows (20262+, and preferably Windows 11). The guide has been tested for Microsoft Windows Version 22H2 (OS Build 22621.963). To check your version and build number, select `WIN + R`, type `winver`, and select `OK`. Furthermore, if you prefer a different Linux distribution other than Ubuntu, please refer to the sources below.
+
+With Windows 11, Windows Terminal is installed by default. If you do not have Windows Terminal, please follow [this](https://learn.microsoft.com/en-us/windows/terminal/install) guide to do so.
+
+## Get started
+
+Open PowerShell, and enter:
+
+```PowerShell
+wsl --install
+```
+
+This enables the WSL and Virtual Machine Platform components, downloads and installs the latest Linux kernel, sets WSL 2 as the default, and downloads and installs the Ubuntu Linux distribution.
+
+You will need to restart your machine to complete the installation process.
+
+## Set up Linux
+
+After the restart a terminal window will open to setup your Linux distribution. Now you will be asked to create username and password.
+
+- These credentials have no bearing on your Windows username and password.
+- Note that whilst entering the password, nothing will appear on screen (blind typing).
+- This will be the default user, and considered the Linux administrator, with the ability to run `sudo` (Super User Do) commands.
+
+To change or reset your password find more information [here](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password).
+
+It is recommended to keep your packages up-to-date. So after we reach the login screen we update and upgrade:
+
+```bash
+sudo apt update && sudo apt upgrade
+```
