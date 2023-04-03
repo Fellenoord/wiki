@@ -1,9 +1,10 @@
 {
-    "index": "Introduction",
-    "wsl": "Windows Subsystem for Linux (WSL)",
-    "macos": "MacOS",
-    "nodejs": "Node.js",
-    "yarn": "Yarn",
-    "git": "Version control using Git",
-    "docker": "Docker"
+  "index": "Introduction",
+  "wsl": "Windows Subsystem for Linux (WSL)",
+  "macos": "MacOS",
+  "nodejs": "Node.js",
+  "yarn": "Yarn",
+  "git": "Version control using Git",
+  "docker": "Docker",
+  "ide": "Development environment"
 }
