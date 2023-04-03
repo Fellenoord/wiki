@@ -6,7 +6,7 @@ export default {
     darkMode: true,
     footer: {
         text: <span>
-            WebCie {new Date().getFullYear()}
+            © {new Date().getFullYear()} WebCie Fellenoord
         </span>,
     },
     docsRepositoryBase: 'https://github.com/Fellenoord/wiki',

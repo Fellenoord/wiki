@@ -1,0 +1,41 @@
+## The `main` branch
+
+The main branch consists of all the code that has been squashed and merged through a pull request. The idea is that all code on `main` works. It is not possible to directly push code to this branch.
+
+## Branch naming
+
+We follow this branch naming structure:
+
+```
+<issue_id>-<description>
+# or
+feat/<description>
+# or
+fix/<description>
+```
+
+In Git, we can use the shorthand to checkout and create a branch:
+
+```bash
+git checkout -b <branch>
+```
+
+## Committing code to the repository
+
+All commits *must* follow the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/#specification). The commit message should be structured as follows:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Here, the types can be as follows: `fix`, `feat`, `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf` or `test`. Furthermore, make sure that the commit message length does not exceed 50 characters. An example commit would look something like this:
+
+```
+feat(activity): allow user to register
+​
+This adds the logic for activity registration and stores the ActivityRegistration to the database.
+```
