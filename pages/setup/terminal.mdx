@@ -1,0 +1,54 @@
+This next section is primarily based on personal preference, though it might be worthwhile to follow along if you're new to WSL (or Linux). By default, Ubuntu comes with the Unix shell called Bash.
+
+## What is Zsh?
+
+Zsh (or Z shell) is an extended version of the Bourne Shell (sh), with new features, and support for plugins and themes. In addition, ZSH has many of the same features as bash, so switching won't be a hassle. We will use the Oh My Zsh framework to manage our ZSH configuration, powerlevel10k as our theme, and zsh-autosuggestions for [fish](https://fishshell.com/)-like autosuggestions.
+
+> MacOS' default shell is zsh. If you're on macOS, you can skip the next section.
+
+## Installing Zsh
+
+First, let's install Zsh:
+
+```Bash
+sudo apt install zsh
+```
+
+We can verify our installation by running `zsh --version`, which should yield an output of the version number. Next, we need to make it our default shell:
+
+```Bash
+chsh -s $(which zsh)
+```
+
+After that restart your terminal, and test if it worked with `echo $SHELL`, it should output `/usr/bin/zsh`.
+
+## Oh My Zsh
+
+Next, we can install Oh My Zsh:
+
+```zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+The configuration stored in `.zshrc` can be viewed using `cat ~/.zshrc` or edited using VS Code using `code ~/.zshrc`. Here you will find such configuration as `ZSH_THEME`, and `plugins`. The theme I really like is called [powerlevel10k](https://github.com/romkatv/powerlevel10k). Before installation, they recommend to set up their [font](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k) (this is optional). Install the theme by cloning the repository (for Oh My Zsh users):
+
+```zsh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Then set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `~/.zshrc`, and restart ZSH with `exec zsh`. Finally, the configuration wizard will show (otherwise run `p10k configure`).
+
+To further improve the ZSH experience, we can also opt for the [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) plugin. To install (for Oh My Zsh users):
+
+```zsh
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+Then add it to the plugins list inside `~/.zshrc`:
+
+```
+plugins=(
+    # other plugins...
+    zsh-autosuggestions
+)
+```

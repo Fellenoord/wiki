@@ -1,5 +1,7 @@
 import { Tab, Tabs } from 'nextra-theme-docs'
 
+## Installation
+
 <Tabs items={['Linux', 'MacOS']}>
     <Tab>
         [Git](https://git-scm.com/) should already be installed on your Linux distribution. You can check by using `git --version` in the command line. However if it's not installed do so using:
@@ -15,3 +17,120 @@ import { Tab, Tabs } from 'nextra-theme-docs'
     </Tab>
 </Tabs>
 
+## Configuration
+
+The Git config can be found at `~/.gitconfig`, but can also be setup using the command line. Let's set a global name and email (removing the `--global` tag can set up local configuration per repository).
+
+```bash
+git config --global user.name "Your Name"
+```
+
+GitHub gives you a no-reply email for your account, which I recommend you use to hide your real email:
+
+```bash
+git config --global user.email "youremail@domain.com"
+```
+
+## Accessing the remote
+
+To access the remote repository, you need to set up an SSH key. This is a public/private key pair that allows you to authenticate with the remote server without having to enter your password every time. You can read more about SSH keys [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+
+### Generating a SSH key
+
+To generate a new SSH key we use `ssh-keygen`.
+
+> Make sure to use the no-reply email if available.
+
+```bash
+ssh-keygen -t ed25519 -C "youremail@domain.com"
+```
+
+### Adding the key to the ssh-agent
+
+Next, we add our key to the `ssh-agent` to manage our keys. Start the `ssh-agent` in the background:
+
+```bash
+exec ssh-agent bash
+```
+
+Then add your private key.
+
+<Tabs items={['Linux', 'MacOS']}>
+    <Tab>
+        ```bash
+        ssh-add ~/.ssh/id_ed25519
+        ```
+
+        Use `cat ~/.ssh/id_ed25519.pub` to show your public key, and finally add it to your GitHub account.
+
+    </Tab>
+    <Tab>
+        ```bash
+        ssh-add ~/.ssh/id_ed25519
+        ```
+
+        Make sure to also add the host to your `~/.ssh/config` file:
+
+        ```
+        Host github.com
+        AddKeysToAgent yes
+        UseKeychain yes
+        IdentityFile ~/.ssh/id_ed25519
+        ```
+
+        Use `pbcopy < ~/.ssh/id_ed25519.pub` to copy your public key, and finally add it to your GitHub account.
+    </Tab>
+</Tabs>
+
+## Signed commits
+
+Though this is highly optional, signing your commits proves that you are the author of the commit.
+
+### Generating a GPG key
+
+To be able to sign a commit we need a GPG key. Let's generate one:
+
+```zsh
+gpg --full-generate-key
+```
+
+Then we select the following options: RSA and RSA (default), 4096 bits and 0. Then enter the same name, and email as before (again the no-reply email is best). Finally, you are asked for a passphrase.
+
+Use the `gpg --list-secret-keys --keyid-format=long`command to list the long form containing both public and private key. We require the private key to sign commits. From that list, we copy the long form of the GPG key ID (example: `3AA5C34371567BD2`) in:
+
+```bash
+gpg --list-secret-keys --keyid-format=long
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot <hubot@example.com>
+ssb   4096R/4BB6D45482678BE3 2016-03-10
+```
+
+Then to print the full GPG key ID in ASCII armor format:
+
+```bash
+gpg --armor --export 3AA5C34371567BD2
+```
+
+Copy your GPG key, beginning with `-----BEGIN PGP PUBLIC KEY BLOCK-----` and ending with `-----END PGP PUBLIC KEY BLOCK-----`. Add it to your GitHub account.
+
+### Signing your commits
+
+First, make sure to tell Git which signing key to use (obviously use your own):
+
+```shell
+git config --global user.signingkey 3AA5C34371567BD2
+```
+
+then add `export GPG_TTY=$(tty)` to your `~/.bashrc` or `~/.zshrc` file and restart your terminal. Then to sign commits we add the `-S` when using `git commit`:
+
+```shell
+$ git commit -S -m "YOUR_COMMIT_MESSAGE"
+```
+
+However, it is easier to configure Git to always sign your commits. We do this by updating the Git configuration again:
+
+```shell
+git config --global commit.gpgsign true
+```
