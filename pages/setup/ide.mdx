@@ -1,0 +1,48 @@
+Arguably the most important part of the setup is your development environment, the place where you'll actually be writing code. For this, we use a so called "IDE" or "Integrated Development Environment". For web development, there are 2 popular options: Visual Studio Code and WebStorm. While both work fine, we recommend using VSCode since it's free and has better support for extensions in the case of our project. The final choice, however, is up to you.
+
+## Visual Studio Code
+
+Visual Studio Code, also known as just VSCode, is a free, open-source IDE developed by Microsoft. It's available for Windows, macOS and Linux and is the most popular IDE for web development. To start, [download the installer from the official website](https://code.visualstudio.com/download) and install it.
+
+### Extensions
+
+VSCode has a built-in extension marketplace, where you can find and install extensions for the IDE. We recommend installing the following extensions:
+- [WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) (when using WSL)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+- [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
+- [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres)
+- [GraphQL: Language Feature Support](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql)
+- [GraphQL: Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql-syntax)
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
+
+These extensions should allow for an easier time when working on our project, we'll quickly go over what they do:
+- **WSL**: This extension allows you to use VSCode as your IDE for WSL, it is very much recommended to use this extension when using VSCode and WSL in any capacity.
+- **Prettier**: This extension allows you to automatically format your code to a consistent style. This is very useful for our project, since we have a strict code style that we follow.
+- **ESLint**: This extension allows you to automatically lint your code, which means it will automatically check for errors and inconsistencies in your code. This is also very useful for our project, since we have a strict code style that we follow.
+- **Docker**: This extension allows you to easily manage Docker containers and images from within VSCode. Can be useful but not a requirement since Docker Desktop does the same thing.
+- **Prisma**: This extension allows you to easily manage Prisma schemas and migrations from within VSCode. Very much recommended if you need to adjust the database schema.
+- **PostgreSQL**: This extension allows you to easily manage PostgreSQL databases from within VSCode. Useful if you want to manually query the database.
+- **GraphQL**: This extension allows you to write and format GraphQL queries and mutations. Very much recommended if you are writing any GraphQL code in the frontend.
+- **Live Share**: This extension allows you to share your VSCode instance with other people, allowing you to work together on the same code. Very useful if you want to work together with other people on the project or if you need any (remote) help.
+
+### Recommended settings
+
+To make VSCode work best with our project, we recommend changing the following settings:
+- **Editor: Format on Save**: This setting will automatically format your code when you save it. This is very useful for our project, since we have a strict code style that we follow.
+- **Project-specific settings**: Both the frontend and backend repositories contain a `.vscode` folder with additional settings that are specific to that project. These settings are automatically applied when opening the project in VSCode, so you don't have to do anything.
+
+
+### Tips
+
+- **Use WSL**: We recommend using WSL for development, since it allows you to use the same development environment on all platforms. If you are using WSL, make sure to install the WSL extension for VSCode. When opening a folder in VSCode, you can open it from WSL by pressing "F1" and typing "Open Folder in WSL", this is way faster than opening the folder in Windows.
+- **Don't be afraid to use the Git tab**: Newcomers might have some difficulty in using command-line Git, so we recommend using the built-in Git support in VSCode. To use Git in VSCode, simply open the Git tab in the left sidebar, from here you can commit, push, pull, etc. This works even better if you combine it with VSCode workspaces (see below).
+- **Create a workspace for the project**: VSCode allows you to create a workspace for a project, which allows you to easily open the project in VSCode. This is very useful if you are working on multiple projects at the same time, since you can easily switch between them. To create a workspace, simply open the project folder in VSCode and click on "Add Folder to Workspace" in the bottom left corner.
+- **Find useful extensions**: VSCode has a built-in extension marketplace, where you can find and install extensions for the IDE. We recommend installing the extensions mentioned above, but you can also find other useful extensions there. For example, you can find extensions for syntax highlighting for other languages, such as Python, C++, etc.
+- **Personalize VSCode**: VSCode is highly customizable, you can change the color theme, the font, the keybindings, etc. You can also install extensions that allow you to customize the UI, such as [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme) and [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme).
+
+## WebStorm
+
+😬
