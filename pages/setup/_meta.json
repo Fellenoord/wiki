@@ -4,6 +4,7 @@
     "macos": "MacOS",
     "nodejs": "Node.js",
     "yarn": "Yarn",
-    "git": "Version control using Git",
-    "docker": "Docker"
+    "git": "Git",
+    "docker": "Docker",
+    "terminal": "Customizing the terminal"
 }
