@@ -19,6 +19,10 @@ The backend has some scripts that come standard with NestJS as well as some scri
 - `test`: Runs all tests (unit and e2e)
 - `test:spec`: Runs all unit tests, can supply a pattern to run specific tests
 - `test:e2e`: Runs all e2e tests, can supply a pattern to run specific tests
+   - `news.e2e-spec.ts`: Runs the e2e test file named `news.e2e-spec.ts`
+   - `news`: Runs all e2e test files that contain the pattern `news`
+   - `-t 'PATTERN'`: Runs all e2e test cases that contain the pattern `PATTERN`.
+        > A use case example might be the following. Say you want to run a test called 'should fail if the user does not have the required roles' in the `news.e2e-spec.ts` file. You would run `yarn test:e2e news -t 'should fail if the user does not have the required roles'`.
 - `db:migration`: Runs a database migration if you have made changes to the schema
 - `db:gen`: Runs Prisma's type generation script, necessary if your Prisma types are out of date
 - `db:seed`: Runs the seed script, this will populate the database with some dummy data
@@ -31,9 +35,7 @@ If you create a PR, there are certain actions that need to pass before your PR c
 
 Before creating a PR, we suggest first running these actions locally to make sure that they pass. If they do not pass, you can still create a PR, but you will need to fix the issues before your PR can be merged.
 
-For testing, you can supply the test scripts with a pattern to test only specific files. For example, if you want to test a file named `news.e2e-spec.ts` (which is an e2e test file), you would run `yarn test:e2e news`. If you want to test a file named `news.service.spec.ts` (which is a unit test file), you would run `yarn test:spec news`.
-
-For the database scripts, you'll need to run `yarn db:migration` if you have made any changes to the Prisma schema file and want these to be reflected in the database. This will also automatically regenerate the Prisma types. You might need to run `yarn db:gen` if, for whatever reason, you find that your Prisma types do not match the schema. If you do not have the seeded data (such as some default users) in your database, you can run `yarn db:seed` to populate the database with this data. If something went horribly wrong with your local database or you just want to sync your database with the latest schema, you can run `yarn db:sync` which will entirely drop your local database and recreate it from scratch, note that any data you have in your local database will be lost.
+For the database scripts, you'll need to run `yarn db:migration` if you have made any changes to the Prisma schema file and want these to be reflected in the database. This will also automatically regenerate the Prisma types. You might need to run `yarn db:gen` if, for whatever reason, you find that your Prisma types do not match the schema. If you do not have the seeded data (such as some default users) in your database, you can run `yarn db:seed` to populate the database with this data. If something went horribly wrong with your local database, or you just want to sync your database with the latest schema, you can run `yarn db:sync` which will entirely drop your local database and recreate it from scratch, note that any data you have in your local database will be lost.
 
 ## Frontend scripts
 
