@@ -30,11 +30,15 @@ In general, we want to nest objects to reflect our relationships in the database
 
 ## How to write resolvers
 
-In the previous example, we saw that we are resolving field on a `TrianingPeriod` via the `TrainingGroupPeriodResolver`. Notice that this is not the same resolver as our `period` query, which is `TrainingPeriodResolver`. While both resolvers are resolvers for the type `TrainingPeriodObject`, we deliberatly chose to split them up. This is because we want to keep our resolvers small and focused on a single task. This makes it easier to maintain and test our code. This also helps with keeping down the number of circular dependencies in NestJS since you won't need to import the `TrainingGroupService` within the `TrainingPeriodModule` this way.
+In the previous example, we saw that we are resolving field on a `TrainingPeriod` via the `TrainingGroupPeriodResolver`. Notice that this is not the same resolver as our `period` query, which is `TrainingPeriodResolver`. While both resolvers are resolvers for the type `TrainingPeriodObject`, we deliberatly chose to split them up. This is because we want to keep our resolvers small and focused on a single task. This makes it easier to maintain and test our code. This also helps with keeping down the number of circular dependencies in NestJS since you won't need to import the `TrainingGroupService` within the `TrainingPeriodModule` this way.
 
-In general, if you are resolving fields for other objects, you should create a new resolver for that object within the module of that object. Our convention is to name the resolver `CurrentObject.ObjectToResolveOn.resolver.ts`. In the case of our `TrainingGroupPeriodResolver`, we are resolving the `groups` field on a `period`, so we named it `training-group.period.resolver.ts`.
+In general, if you are resolving fields for other objects, you should create a new resolver for that object within the module of that object. 
+
+> Our convention is to name the resolver `CurrentObject.ObjectToResolveOn.resolver.ts`. In the case of our `TrainingGroupPeriodResolver`, we are resolving the `groups` field on a `period`, so we named it `training-group.period.resolver.ts`.
 
 For queries and mutations, on the other hand, you are free to use the same resolver as the object you are querying or mutating. In the case of our `TrainingPeriodResolver`, we are querying a `period` and so we named it `training-period.resolver.ts`. This also makes the most sense since we can use our `TrainingPeriodService`, which is in the same module as our resolver, to both query and mutate periods.
+
+> Our convention is to name the resolver `CurrentObject.resolver.ts`. In the case of our `TrainingPeriodResolver`, we are querying a `period`, so we named it `training-period.resolver.ts`.
 
 ## Avoid top-level queries for nested objects
 
