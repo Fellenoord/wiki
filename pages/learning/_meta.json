@@ -1,6 +1,7 @@
 {
-    "index": "Where to start",
-    "programming": "Programming skills",
-    "backend": "Backend skills",
-    "frontend": "Frontend skills"
+  "index": "Where to start",
+  "programming": "Programming skills",
+  "backend": "Backend skills",
+  "frontend": "Frontend skills",
+  "git": "Git skills"
 }

@@ -1,4 +1,5 @@
 {
-    "index": "Step-by-step",
-    "git-conventions": "Git conventions"
+  "index": "Step-by-step",
+  "git-conventions": "Git conventions",
+  "commands": "Useful commands"
 }
