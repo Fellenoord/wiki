@@ -1,0 +1,51 @@
+While you might be familiar with REST APIs, you might not be familiar with GraphQL. GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. If you are not yet familiar with the basics of GraphQL, please refer to the [backend skills page](/learning/backend#have-used-nodejs-before).
+
+We'll go over the general structure of GraphQL, how we apply it in our API and how to write GraphQL resolvers using our conventions.
+
+## GraphQL structure
+
+GraphQL APIs are structured as a graph of nodes and edges. The nodes are the data types and the edges are the relationships between them. The edges are defined by the fields of the nodes. For example, a `User` node might have a `posts` field that is a list of `Post` nodes. The `Post` node might have a `comments` field that is a list of `Comment` nodes. The `Comment` node might have a `user` field that is a `User` node.
+
+In the case of our project, we have a `TrainingPeriod` node that has a `groups` field that is a (paginated) list of `TrainingGroup` nodes, which have a `trainings` field that is a (paginated) list of `Training` nodes. Each `Training` also contains a `date` field that is a `Date` node.
+
+Each of these things can also be found in our codebase. The `TrainingPeriod` node is defined in our dto file: `src/training/period/dto/training-period.object.ts`. Notice the `@ObjectType` notation which defines a GraphQL object in NestJS. In the training period dto, you can see only 2 fields: `id` and `isPublished`. However, earlier we mentioned that the `TrainingPeriod` node has a `groups` field that is a list of (paginated) `TrainingGroup` nodes. To find these groups, we have to go to the `TrainingGroupPeriodResolver` found in `src/training/group/training-group.period.resolver.ts`. In here, we'll find a `@ResolveField` that returns a `PaginatedTrainingGroupsObject`. This function allows a user to query a `TrainingPeriod` in our API and resolve a field called `groups` that resolves as a paginated list of `TrainingGroup` nodes. If the top-level for query is called `period` (which can be found in our `TrainingPeriodResolver` in `src/training/period/training-period.resolver.ts`), our groups query would look like this:
+
+```graphql
+query GetPeriodGroups($periodId: String!) {
+  period(id: $periodId) {
+    groups {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}
+```
+
+> If you are curious as to why we are cannot directly query a `TrainingGroup` node from `groups`, you can read more about the pagination specification [here](https://relay.dev/graphql/connections.htm).
+
+If you have read up on GraphQL, you should be familiar with this query notation. We are creating a query called `GetPeriodGroups` that takes 1 argument, `periodId` which is of type `String` (the `!` means that it is required). The query will return a `period` node that has a `groups` field that is a paginated list of `TrainingGroup` nodes. Each `TrainingGroup` node has an `id` field.
+
+In general, we want to nest objects to reflect our relationships in the database. So instead of having a query for `group`, you can only query a group through a period. This is because a group is only related to a period and not to any other object. If you want to query a group, you must first query a period and then query the group through the period. Mutations, on the other hand, are not nested. This is because mutations are used to create, update or delete objects. If you want to create a group, you can do so without having to query a period first.
+
+## How to write resolvers
+
+In the previous example, we saw that we are resolving field on a `TrainingPeriod` via the `TrainingGroupPeriodResolver`. Notice that this is not the same resolver as our `period` query, which is `TrainingPeriodResolver`. While both resolvers are resolvers for the type `TrainingPeriodObject`, we deliberatly chose to split them up. This is because we want to keep our resolvers small and focused on a single task. This makes it easier to maintain and test our code. This also helps with keeping down the number of circular dependencies in NestJS since you won't need to import the `TrainingGroupService` within the `TrainingPeriodModule` this way.
+
+In general, if you are resolving fields for other objects, you should create a new resolver for that object within the module of that object. 
+
+> Our convention is to name the resolver `CurrentObject.ObjectToResolveOn.resolver.ts`. In the case of our `TrainingGroupPeriodResolver`, we are resolving the `groups` field on a `period`, so we named it `training-group.period.resolver.ts`.
+
+For queries and mutations, on the other hand, you are free to use the same resolver as the object you are querying or mutating. In the case of our `TrainingPeriodResolver`, we are querying a `period` and so we named it `training-period.resolver.ts`. This also makes the most sense since we can use our `TrainingPeriodService`, which is in the same module as our resolver, to both query and mutate periods.
+
+> Our convention is to name the resolver `CurrentObject.resolver.ts`. In the case of our `TrainingPeriodResolver`, we are querying a `period`, so we named it `training-period.resolver.ts`.
+
+## Avoid top-level queries for nested objects
+
+With our `TrainingGroupPeriodResolver`, we are resolving the training groups on a `TrainingPeriod`. However, this adds more complexity to our groups query since we now need to query a period first. While we could have added a top-level query for `groups`, we decided against it. This is because we want to keep our API as simple as possible. We want to avoid having to query multiple objects to get the data you want. This is why we decided to nest the `groups` field on the `period` query. This way, you can query a period and get the groups through that period. This is also why we decided to nest the `trainings` field on the `group` query. This way, you can query a group and get the trainings through that group.
+
+You can, however, create some shortcuts. In our case, we have resolve a `myTrainings` field directly on a `TrainingPeriod`. This is both because we want to make it a little easier for the frontend to query the trainings for the current user and because we a user's training might span multiple groups. Another example of such a shortcut is the `currentPeriod` query. This is a top-level query that returns the current period. This is because we want to make it easier for the frontend to query the current period.
+
+Keep in mind that this advise does not hold for mutations, since you can't nest mutations. If you want to create a training, it has to be done through a top-level mutation. In the end, a top-level query should only be added if the object is standalone with no parent relationship. If the object is related to another object, you should nest the query (as a resolved field) on that object.
