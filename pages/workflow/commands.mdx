@@ -1,0 +1,73 @@
+Both the frontend and backend have some scripts that you will need to use to get things up and running. We'll quickly discuss some of these scripts, where to find them, how and when to use them and some other non-project specific scripts you might find useful.
+
+## Where to find the scripts
+
+Since both our frontend and backend projects are using Node, the scripts are in the same place for both, namely our `package.json` file. This is the same file that keeps track of the dependencies of our projects. You can find this file in the root of both the frontend and backend folders. The scripts are specified under the "scripts" key.
+
+## How to use the scripts
+
+For the scripts found in the `package.json` file, you can run them by typing `yarn <script-name>`. For example, if you want to run the backend in such a way that it restarts on every file change, you would run `yarn start:dev`. If you want to run the frontend in development mode, you would run `yarn dev`.
+
+## Backend scripts
+
+The backend has some scripts that come standard with NestJS as well as some scripts needed for database management. The useful scripts are:
+- `build`: Builds the backend for production and checks for any type errors
+- `format`: Formats the code using Prettier
+- `lint`: Lints and fixes the code using ESLint, this is required to pass before your PR can be merged
+- `lint:check`: Lints the code without applying any fixes
+- `start:dev`: Starts the backend in development mode, this will restart the backend on every file change
+- `test`: Runs all tests (unit and e2e)
+- `test:spec`: Runs all unit tests, can supply a pattern to run specific tests
+- `test:e2e`: Runs all e2e tests, can supply a pattern to run specific tests
+   - `news.e2e-spec.ts`: Runs the e2e test file named `news.e2e-spec.ts`
+   - `news`: Runs all e2e test files that contain the pattern `news`
+   - `-t 'PATTERN'`: Runs all e2e test cases that contain the pattern `PATTERN`.
+        > A use case example might be the following. Say you want to run a test called 'should fail if the user does not have the required roles' in the `news.e2e-spec.ts` file. You would run `yarn test:e2e news -t 'should fail if the user does not have the required roles'`.
+- `db:migration`: Runs a database migration if you have made changes to the schema
+- `db:gen`: Runs Prisma's type generation script, necessary if your Prisma types are out of date
+- `db:seed`: Runs the seed script, this will populate the database with some dummy data
+- `db:sync`: Drops your local database and recreates it from scratch, this will also run the seed script
+
+If you create a PR, there are certain actions that need to pass before your PR can be merged. These actions are:
+- `build`
+- `lint`
+- `test`
+
+Before creating a PR, we suggest first running these actions locally to make sure that they pass. If they do not pass, you can still create a PR, but you will need to fix the issues before your PR can be merged.
+
+For the database scripts, you'll need to run `yarn db:migration` if you have made any changes to the Prisma schema file and want these to be reflected in the database. This will also automatically regenerate the Prisma types. You might need to run `yarn db:gen` if, for whatever reason, you find that your Prisma types do not match the schema. If you do not have the seeded data (such as some default users) in your database, you can run `yarn db:seed` to populate the database with this data. If something went horribly wrong with your local database, or you just want to sync your database with the latest schema, you can run `yarn db:sync` which will entirely drop your local database and recreate it from scratch, note that any data you have in your local database will be lost.
+
+## Frontend scripts
+
+- `dev`: Starts the frontend in development mode, this will restart the frontend on every file change
+- `build`: Builds the frontend for production and checks for any type errors
+- `start`: Starts the frontend in production mode
+- `lint`: Lints the code using ESLint, this is required to pass before your PR can be merged
+- `gen`: Generates the GraphQL types and queries from the schema and .graphql files
+
+Like the backend, the frontend also has some actions that are required to pass before any PR can be merged, these actions are:
+- `lint`
+- `build`
+
+Before creating a PR, we suggest first running these actions locally to make sure that they pass. If they do not pass, you can still create a PR, but you will need to fix the issues before your PR can be merged.
+
+If you are creating additional GraphQL queries, mutations or fragments or if the schema has changed on the backend, you will need to run `yarn gen` to regenerate the GraphQL types and queries. This will also tell you if there are any errors in your queries, mutations or fragments.
+
+## Other useful scripts
+
+### Docker
+
+When developing using Docker, it is useful to know the CLI scripts that are available to you. Below are the script you might want to use when developing.
+
+- `docker compose COMMAND --help`: For more information on a command.
+- `docker compose up`: Creates and starts containers.
+  - `CONTAINER`: The name of the container you want to start. If you want to start all containers, you can omit this argument.
+    > This can be useful when dealing with migrations. In that case you only want to run the database, so you would run `docker compose up postgres -d`. Then handle all migration actions.
+  - `-d`: Detached mode: Run containers in the background
+  - `--build`: Build images before starting containers.
+    > Use this if you have added new dependencies to your project.
+  - `-V`: Recreate anonymous volumes instead of retrieving data from the previous containers.
+- `docker compose down`: Stops containers and removes containers, networks, volumes, and images created by up.
+  - `-v`: Remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers.
+    > Use this if you want to reset the database.
+

@@ -1,0 +1,86 @@
+During development, you will probably encounter many errors. This page will help you understand and troubleshoot some of the more common errors specific to this project. There are also some general errors as well as tips and tricks that can help you to more easily debug your code.
+
+This page will be updated as we encounter more errors. If you encounter an error that is not listed here, please feel free to open an issue or a pull request to add it to this page.
+
+## Backend
+
+### NestJS circular dependencies
+
+If you are getting an error that looks like this:
+
+```bash
+[Nest] 1   - 2020-10-05 11:00:00   [ExceptionHandler] Nest cant resolve dependencies of the CatsService (?). Please make sure that the argument at index [0] is available in the CatsModule context.
+```
+
+You are probably running into a circular dependency. This is a common problem in NestJS and can be solved by using `forwardRef`. However, before we can solve this, we have to find out where the circular dependency is. To do this, we can use the carefully read the error to see where we can find the offending module. In the case of our error, we can see that the error is coming from the argument at `index [0]` of the `CatsService`. If our `CatsService` were to look like this:
+
+```typescript
+@Injectable()
+export class CatsService {
+  constructor(private commonService: CommonService) {}
+}
+```
+
+Then we would know that the error is coming from the CommonService, since CommonService is at index 0 of our `CatsService` `constructor` method. We should be importing the `CommonModule` in our `CatsModule`, which would look like this:
+
+```typescript
+@Module({
+  imports: [CommonModule],
+  providers: [CatsService],
+})
+```
+
+Now, we can use NestJS' `forwardRef` function to resolve the circular dependency as follows:
+
+```typescript
+@Module({
+  imports: [forwardRef(() => CommonModule)],
+  providers: [CatsService],
+})
+```
+
+Do not forget to also do the same in the `CommonModule`. More information about circular dependencies in NestJS can be found in the [NestJS documentation](https://docs.nestjs.com/fundamentals/circular-dependency).
+
+
+### GraphQL type is defined in resolvers but not in schema
+
+If you are getting an error talking about a type being defined in your resolvers but not in your schema, you are likely missing a `@Query` or `@Mutation` function in your resolver. You cannot resolve fields on an object without having at least one `@Query` or `@Mutation` function that returns that object.
+
+
+### Prisma is missing properties on my type
+
+If you have just updated your Prisma schema and created a migration, but the added property is not reflected in Prisma's TypeScript type, it's likely that your Prisma types are out of date. To fix this, you can run `yarn db:gen` to regenerate the Prisma types. Depending on the size of the schema and your local machine, it may take a few seconds for your IDE to pick up the new types, if you are using VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette.
+
+### Resolver fields are not showing up in GraphQL schema
+
+If you have added new fields to a resolver but you cannot find them in your GraphQL schema, it's likely that you forgot to add your Resolver to the NestJS module. You can do this by adding the resolver to the `providers` array in the module's `@Module` decorator. Also don't forget to add the module to the `imports` array of the app module.
+
+## Frontend
+
+### GraphQL fragment is missing properties
+
+If you have just added new `.graphql` files or have added a new field to an existing file, you might find that the new property is not appearing in the generated TypeScript types. If this is the case, make sure you have run `yarn gen` to generate TypeScript types for your GraphQL schema and files. If the changes are still not appearing, your IDE is likely struggling to pick up the new types. In VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette or opening the generated file and let VSCode pick up the new types.
+
+## In general
+
+Here are some general tips and tricks that can help you to debug your code. Ideally, these are followed in order, but feel free to skip a step or two if you don't have the time or don't think it's necessary.
+
+### Log intermediate values
+
+If you are unsure why something is not working, try logging the value of the variable you are working with. This can help you to understand what is going on and can help you to find the source of the problem. You can use `console.log` to log the variable, if your value is an object, you might prefer to use `console.log({ value })` or `console.log(JSON.stringify(value, null, 2))` to get a more readable output.
+
+### Read the error message
+
+The error message is usually the best place to start when debugging. It will usually tell you exactly what is wrong and where the problem is. In the case of TypeScript errors, the error message will not always be the most helpful, but it will usually give you a good idea of where to look.
+
+### Google is your friend
+
+If you are still stuck, try googling the error message. You will likely find a lot of helpful information on StackOverflow and other sites. If you are still stuck, try to rephrase your question and try again. Also make sure to include relevant keywords in your search, such as the name of the framework you are using.
+
+### Consult the documentation
+
+If you are still stuck, try to consult the documentation for the framework you are using. The documentation is usually very well written and will help you to understand what is going on.
+
+### Ask for help
+
+If you exhausted all of your options and are still stuck, don't be afraid to ask others for help! You can join the Discord server and ask for help in the `#help` channel. Please include as much information as possible, such as the error message, the code you are working with, and any other relevant information. If you are not in the Discord server yet, please ask for an invite.

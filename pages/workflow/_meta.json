@@ -1,5 +1,7 @@
 {
   "index": "Step-by-step",
   "git-conventions": "Git conventions",
+  "commands": "Useful commands",
+  "troubleshooting": "Troubleshooting",
   "graphql": "GraphQL conventions"
 }
