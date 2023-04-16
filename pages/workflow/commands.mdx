@@ -43,7 +43,7 @@ For the database scripts, you'll need to run `yarn db:migration` if you have mad
 - `lint`: Lints the code using ESLint, this is required to pass before your PR can be merged
 - `gen`: Generates the GraphQL types and queries from the schema and .graphql files
 
-Like the backend, the frontend has also has some actions that are required to pass before any PR can be merged, these actions are:
+Like the backend, the frontend also has some actions that are required to pass before any PR can be merged, these actions are:
 - `lint`
 - `build`
 
@@ -54,4 +54,18 @@ If you are creating additional GraphQL queries, mutations or fragments or if the
 ## Other useful scripts
 
 ### Docker
-TODO
+
+When developing using Docker, it is useful to know the CLI scripts that are available to you. Below are the script you might want to use when developing.
+
+- `docker compose COMMAND --help`: For more information on a command.
+- `docker compose up`: Creates and starts containers.
+  - `CONTAINER`: The name of the container you want to start. If you want to start all containers, you can omit this argument.
+    > This can be useful when dealing with migrations. In that case you only want to run the database, so you would run `docker compose up postgres -d`. Then handle all migration actions.
+  - `-d`: Detached mode: Run containers in the background
+  - `--build`: Build images before starting containers.
+    > Use this if you have added new dependencies to your project.
+  - `-V`: Recreate anonymous volumes instead of retrieving data from the previous containers.
+- `docker compose down`: Stops containers and removes containers, networks, volumes, and images created by up.
+  - `-v`: Remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers.
+    > Use this if you want to reset the database.
+
