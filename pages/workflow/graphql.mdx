@@ -24,6 +24,8 @@ query GetPeriodGroups($periodId: String!) {
 }
 ```
 
+> If you are curious as to why we are cannot directly query a `TrainingGroup` node from `groups`, you can read more about the pagination specification [here](https://relay.dev/graphql/connections.htm).
+
 If you have read up on GraphQL, you should be familiar with this query notation. We are creating a query called `GetPeriodGroups` that takes 1 argument, `periodId` which is of type `String` (the `!` means that it is required). The query will return a `period` node that has a `groups` field that is a paginated list of `TrainingGroup` nodes. Each `TrainingGroup` node has an `id` field.
 
 In general, we want to nest objects to reflect our relationships in the database. So instead of having a query for `group`, you can only query a group through a period. This is because a group is only related to a period and not to any other object. If you want to query a group, you must first query a period and then query the group through the period. Mutations, on the other hand, are not nested. This is because mutations are used to create, update or delete objects. If you want to create a group, you can do so without having to query a period first.
