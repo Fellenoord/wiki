@@ -1,0 +1,61 @@
+If you don't want to work with Docker or simply can't be bothered to install it, you can also install all of the dependencies on your local machine and use those. This includes PostgreSQL and Redis. We'll quickly go over how to install these dependencies on WSL2.
+
+## Installing PostgreSQL
+
+To get your own local instance of PostgreSQL running, you can use the following command:
+
+```bash
+sudo apt install postgresql postgresql-contrib
+```
+
+Once installed, you can check if it's properly installed by running the following command:
+
+```bash
+psql --version
+```
+
+Before you can create your database, you'll need to create a password for the default admin user, `postgres`. To do this, you can run the following command:
+
+```bash
+sudo passwd postgres
+```
+
+Then, you can start your postgres service by running the following command:
+
+```bash
+sudo service postgresql start
+```
+
+You can then create your database by running the following command:
+
+```bash
+sudo -u postgres createdb <database_name>
+```
+
+Keep in mind that you need to start the postgres service every time you restart your computer. Alternatively, you can create a script that starts the service for you whenever you start your computer. But we'll leave this as an exercise for the reader.
+
+More information about installing PostgreSQL on WSL can be found in the [official documentation](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql).
+
+## Installing Redis
+
+Before you can run Redis, you'll need to install it first. To do this, you can run the following command:
+
+```bash
+sudo apt install redis-server
+```
+
+Once installed, you can check if it's properly installed by running the following command:
+
+```bash
+redis-server --version
+```
+
+You can then start your Redis server by running the following command:
+
+```bash
+sudo service redis-server start
+```
+
+Keep in mind that you need to start the Redis server every time you restart your computer. Alternatively, you can create a script that starts the server for you whenever you start your computer. But we'll leave this as an exercise for the reader.
+
+More information about installing Redis on WSL can be found in the [official documentation](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-redis).
