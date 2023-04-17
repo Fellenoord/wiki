@@ -25,10 +25,10 @@ The Git config can be found at `~/.gitconfig`, but can also be setup using the c
 git config --global user.name "Your Name"
 ```
 
-GitHub gives you a no-reply email for your account, which I recommend you use to hide your real email:
+GitHub gives you a no-reply email for your account, which I recommend you use to hide your real email. For more info look [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address).
 
 ```bash
-git config --global user.email "youremail@domain.com"
+git config --global user.email "<id>+<username>@users.noreply.github.com"
 ```
 
 ## Accessing the remote
@@ -42,7 +42,7 @@ To generate a new SSH key we use `ssh-keygen`.
 > Make sure to use the no-reply email if available.
 
 ```bash
-ssh-keygen -t ed25519 -C "youremail@domain.com"
+ssh-keygen -t ed25519 -C "<id>+<username>@users.noreply.github.com"
 ```
 
 ### Adding the key to the ssh-agent
