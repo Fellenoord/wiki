@@ -6,6 +6,7 @@
   "yarn": "Yarn",
   "git": "Version control using Git",
   "docker": "Docker",
+  "local-setup": "Local setup",
   "ide": "Development environment",
   "terminal": "Customizing the terminal",
   "others": "Additional programs"
