@@ -39,7 +39,16 @@ Now, we can use NestJS' `forwardRef` function to resolve the circular dependency
 })
 ```
 
-Do not forget to also do the same in the `CommonModule`. More information about circular dependencies in NestJS can be found in the [NestJS documentation](https://docs.nestjs.com/fundamentals/circular-dependency).
+If you find that this does not resolve your issue, it might be the case that you are using your services within one another, in which case you'll also need to use `forwardRef` in the services:
+
+```typescript
+@Injectable()	
+export class CatsService {	
+  constructor(@Inject(forwardRef(() => CommonService)) private commonService: CommonService) {}
+}
+```
+
+Do not forget to also do repeat these steps on the other side of the cicular dependency (`CommonModule` and `CommonService` in our case). More information about circular dependencies in NestJS can be found in the [NestJS documentation](https://docs.nestjs.com/fundamentals/circular-dependency) as well as their [common errors page](https://docs.nestjs.com/faq/common-errors).
 
 
 ### GraphQL type is defined in resolvers but not in schema
