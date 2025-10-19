@@ -58,7 +58,7 @@ If you are getting an error talking about a type being defined in your resolvers
 
 ### Prisma is missing properties on my type
 
-If you have just updated your Prisma schema and created a migration, but the added property is not reflected in Prisma's TypeScript type, it's likely that your Prisma types are out of date. To fix this, you can run `yarn db:gen` to regenerate the Prisma types. Depending on the size of the schema and your local machine, it may take a few seconds for your IDE to pick up the new types, if you are using VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette.
+If you have just updated your Prisma schema and created a migration, but the added property is not reflected in Prisma's TypeScript type, it's likely that your Prisma types are out of date. To fix this, you can run `pnpm db:gen` to regenerate the Prisma types. Depending on the size of the schema and your local machine, it may take a few seconds for your IDE to pick up the new types, if you are using VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette.
 
 ### Resolver fields are not showing up in GraphQL schema
 
@@ -68,7 +68,7 @@ If you have added new fields to a resolver but you cannot find them in your Grap
 
 ### GraphQL fragment is missing properties
 
-If you have just added new `.graphql` files or have added a new field to an existing file, you might find that the new property is not appearing in the generated TypeScript types. If this is the case, make sure you have run `yarn gen` to generate TypeScript types for your GraphQL schema and files. If the changes are still not appearing, your IDE is likely struggling to pick up the new types. In VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette or opening the generated file and let VSCode pick up the new types.
+If you have just added new `.graphql` files or have added a new field to an existing file, you might find that the new property is not appearing in the generated TypeScript types. If this is the case, make sure you have run `pnpm gen` to generate TypeScript types for your GraphQL schema and files. If the changes are still not appearing, your IDE is likely struggling to pick up the new types. In VSCode, you can try restarting the TS server by running `TypeScript: Restart TS Server` from the command palette or opening the generated file and let VSCode pick up the new types.
 
 ## In general
 

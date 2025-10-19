@@ -3,7 +3,7 @@
   "wsl": "Windows Subsystem for Linux (WSL)",
   "macos": "MacOS",
   "nodejs": "Node.js",
-  "yarn": "Yarn",
+  "pnpm": "pnpm",
   "git": "Version control using Git",
   "docker": "Docker",
   "local-setup": "Local setup",

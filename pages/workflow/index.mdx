@@ -31,13 +31,13 @@ git clone git@github.com:Fellenoord/fellenoord-api.git
 
 ## 3. Setting up the dependencies
 
-For the development at the WebCie we universally use the [yarn](/setup/yarn). To get all the dependencies downloaded simply run:
+For the development at the WebCie we universally use [pnpm](/setup/pnpm). To get all the dependencies downloaded simply run:
 
 ```bash
-yarn install
+pnpm install
 
 # shorthand
-yarn
+pnpm i
 ```
 
 This will create a `node_modules` folder with all the dependencies required to develop locally.
@@ -131,4 +131,3 @@ It might be wise to test the PR locally to see if it works as intended. If you h
 > This action can only be done by one of the `CODEOWNERS`.
 
 When the PR is finished and approved, we can merge the code to be on the `main` branch.
-
