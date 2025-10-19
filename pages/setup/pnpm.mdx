@@ -1,0 +1,9 @@
+By default, Node.js comes with a package manager called Node Package Manager (NPM). However, we use the pnpm package manager. To ensure consistent pnpm versions across contributors, we recommend using Corepack (bundled with Node.js v16.13+).
+
+**Recommended (with Corepack):**
+```bash
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+Check your installation using `pnpm --version`.

@@ -7,6 +7,5 @@ Built with [Nextra](https://nextra.site/docs).
 First, run the development server:
 
 ```bash
-yarn dev
+pnpm dev
 ```
-
