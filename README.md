@@ -1,4 +1,4 @@
-# WebCieWiki
+# WebcieWiki
 
 Built with [Nextra](https://nextra.site/docs).
 
